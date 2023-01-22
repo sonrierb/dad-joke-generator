@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dads joke generator</title>
+    <style>
+body{
+    margin: 0;
+    padding: 0;
+background: linear-gradient(to left bottom, aliceblue,pink,aliceblue);
+min-height: 100vh;
+display: flex;
+justify-content: center;
+align-items: center;
+font-family: monospace;
+}
+.container{
+    text-align: center;
+    background-color: rgba(255,255,255,.3);
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 6px 10px rgba(0,0,0,.3);
+    width: 80%;
+   
+}
+.heading{
+    color: rgb(149, 63, 219);
+   letter-spacing: 2px;
+   text-shadow: 0 2px 4px rgba(0,0,0,.3);
+    font-size: 35px;
+    font-weight: 200;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+}
+.joke{
+    font-size: 25px;
+    font-weight: 500;
+    margin: 40px;
+}
+.btn{
+    color: rgb(149, 63, 219);
+    padding: 10px 20px;
+    border-color:rgba(255,255,255,.6) ;
+    text-transform: uppercase;
+    border-radius: 5px;
+    background-color:rgba(255,255,255,.3) ;
+    font-weight: 700;
+    font-size: 18px;
+    cursor: pointer;
+    font-family: monospace;
+    width: 300px;
+    transition: all 300ms ease;
+}
+.btn:hover{
+    background-color:rgba(255,255,255,.5) ;
+    box-shadow: 2px 2px 4px rgba(0,0,0,.3);
+}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="heading">Dad Joke Generator</h1>
+        <p class="joke" id="joke">Jokes</p>
+       <button class="btn" id="btn">Tell me a joke</button>
+    </div>
+
+</body>
+<script>
+const btnE1 = document.getElementById("btn")
+const jokeE1 = document.getElementById("joke")
+
+btnE1.addEventListener("click",()=>{
+    getJoke()
+})
+
+const apiKey ="wBH1NtWrlmZN4Z+s0YT0Sw==YcucacqwTy0EcRMb"
+
+const options ={
+    method:"GET",
+    headers:{
+        "X-Api-Key": apiKey
+    }
+}
+
+const apiURL ="https://api.api-ninjas.com/v1/dadjokes?limit=1"
+
+async function getJoke() {
+
+try{
+    jokeE1.innerText= "Updating..."
+btnE1.disabled=true
+btnE1.innerText= "loading..."
+
+   const response=await fetch(apiURL,options) 
+const data =await response.json()
+btnE1.disabled=false
+btnE1.innerText= "Tell me a joke"
+jokeE1.innerText= data[0].joke
+}catch(error){
+    btnE1.disabled=false
+btnE1.innerText= "Tell me a joke"
+    jokeE1.innerText= "An error happened, try again later."
+}
+}
+
+
+</script>
+</html>
